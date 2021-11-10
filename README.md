@@ -1,10 +1,10 @@
 ![logo](gitImages/logo.jpg)
 # Cadix Cards
-A functional website for greeting cards made by students of Stedelijk Lyceum Cadix. The website uses Animate.css, Bootstrap 3, EJS for the front-end and MySQL, ExpressJS and bcrypt for the back-end.
+A functional website for greeting cards. The website uses Animate.css, Bootstrap 3, EJS for the front-end and MySQL, ExpressJS and bcrypt for the back-end.
 
 # Requirements
 - NodeJS
-- Already created MySQL database ```dbcadixcards```
+- Already existing MySQL database ```dbcadixcards```, database information coming out soon
  
 # After extracation
 ```
