@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import open from 'open';
 const app = express();
 app.use(session({
-    secret: "Hsahcuidhuivcnxois8327873*",
+    secret: "your-secret-cookie-key",
     resave: true,
     saveUninitialized: true,
     cookie: {
