@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC Register</title>
+    <link rel="icon" href="favicon.ico?v=1.1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color:#F44336;color:#fff;">
+    <header>
+      <nav class="navbar navbar-default container">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="/home">Cadix Cards</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li style="opacity:0.5"><a href="shop">Shop</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="/register">Registreren</a></li>
+              <li><a href="/login">Inloggen</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+<div class="container animate__animated animate__fadeInDown">
+    <h2 style="margin-bottom: 5%" class="text-center">Registreren</h2>
+    <form class="form-horizontal" method="post" action="/register/auth">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="naam">Achternaam:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="naam" placeholder="Jouw naam" name="naam" required>
+        </div>
+      </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="voornaam">Voornaam:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="voornaam" placeholder="Jouw voornaam" name="voornaam" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="geboorte">Geboortedatum:</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="geboorte" placeholder="Jouw geboortedatum" name="geboorte" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="geslacht">Geslacht:</label>
+            <label class="radio-inline">
+              <input type="radio" name="geslacht" value="M" checked>Man</label>
+            <label class="radio-inline">
+              <input type="radio" name="geslacht" value="V">Vrouw</label>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="straat">Straat:</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="straat" placeholder="Jouw straatnaam" name="straat" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="huisnum">Huisnummer:</label>
+            <div class="col-sm-10">          
+              <input type="number" class="form-control" id="huisnum" placeholder="Jouw huisnummer" name="huisnum" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="bus">Bus:</label>
+            <div class="col-sm-10">          
+              <input type="number" class="form-control" id="bus" placeholder="Jouw bus" name="bus" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="postcode">Postcode:</label>
+            <div class="col-sm-10">          
+              <input type="number" class="form-control" id="postcode" placeholder="Jouw postcode" name="postcode" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="postcode">Gemeente:</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="gemeente" placeholder="Jouw gemeente" name="gemeente" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="land">Land:</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="land" placeholder="Jouw land" name="land" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="telefoon">Telefoonnummer:</label>
+            <div class="col-sm-10">          
+              <input type="tel" class="form-control" id="telefoon" placeholder="Jouw telefoonnummer" name="telefoon" required>
+            </div>
+          </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Email:</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="email" placeholder="Jouw email" name="email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="pwd">Wachtwoord:</label>
+        <div class="col-sm-10">          
+          <input type="password" class="form-control" id="pwd" placeholder="Jouw wachtwoord" name="pwd" required>
+        </div>
+      </div>
+      <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Registeren</button>
+        </div>
+      </div>
+    </form>
+    <% if (msg) { %>
+      <%= msg %>
+      <% } %>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+body {
+    background-color:#F44336;color:#fff;
+}
+nav {
+    border-radius: 2%;
+}
+.container {
+    margin-bottom: 2vw;
+}
+#antwerpen_logo, #sm{
+    width: 10%;
+}
+hr {
+    border: 1.5px solid white;
+}

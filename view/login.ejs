@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC Login</title>
+    <link rel="icon" href="favicon.ico?v=1.1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color:#F44336;color:#fff;">
+    <header>
+      <nav class="navbar navbar-default container">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="/home">Cadix Cards</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li style="opacity:0.5"><a href="shop">Shop</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/register">Registreren</a></li>
+              <li class="active"><a href="/">Inloggen</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+<div class="container animate__animated animate__fadeInUp">
+    <h2 style="margin-bottom: 5%" class="text-center">Inloggen:</h2>
+    <form class="form-horizontal" method="post" action="/login/auth">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Email:</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="email" placeholder="Jouw email" name="email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
+        <div class="col-sm-10">          
+          <input type="password" class="form-control" id="wachtwoord" placeholder="Jouw wachtwoord" name="wachtwoord" required>
+        </div>
+      </div>
+      <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label><input type="checkbox" name="remember">Onthoud mij</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Inloggen</button>
+        </div>
+      </div>
+    </form>
+    <% if (failed) { %>
+        <strong>Oops!</strong> U hebt foute email of wachtwoord ingevuld.
+    <% } %>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
