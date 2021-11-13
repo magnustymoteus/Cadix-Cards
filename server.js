@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import open from 'open';
 const app = express();
 app.use(session({
-    secret: "Hsahcuidhuivcnxois8327873*",
+    secret: "secret-cookie-key",
     resave: true,
     saveUninitialized: true,
     cookie: {
@@ -149,4 +149,6 @@ app.get("/logout", async(req, res) => {
 app.get("*", async(req, res)=> {
     res.redirect("/home");
 });
+
 app.listen(3000, () => console.log("Running on port 3000"));
+
