@@ -30,7 +30,9 @@
             <ul class="nav navbar-nav navbar-right">
               <% if (logged) { %>
                 <li class="active"><a href="#"><%= name_string %></a></li>
-                <li><a href="/logout">Uitloggen</a></li>
+                <% if (isAdmin) { %>  
+              <li><a href="admin">Manager</a></li> 
+               <% } %> <li><a href="/logout">Uitloggen</a></li>  
             <% } else { %>
               <li><a href="/register">Registreren</a></li>
               <li><a href="/login">Inloggen</a></li>

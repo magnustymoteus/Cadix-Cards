@@ -52,7 +52,7 @@ export function selectKlant(e, p) {
             if(result[0]) {
                 compareHash(p, result[0].wachtwoord).then(function(compRes) {
                     if(compRes) {
-                        con.query("SELECT naam, voornaam FROM tblklant WHERE email = ?", [e], (err,res) => {
+                        con.query("SELECT klantID FROM tblklant WHERE email = ?", [e], (err,res) => {
                             if(err) return rej(err);
                             resolve(res);
                         });
@@ -68,7 +68,40 @@ export function selectKlant(e, p) {
         });
     });
 }
+export function updateStats(k) {
+   return new Promise(function(resolve, rej) {
+        con.query("SELECT naam, voornaam, admin FROM tblklant WHERE klantID = ?", [k], (err,res) => {
+            if(err) return rej(err);
+            resolve(res);
+        })
+   });
+}
+export function getUsers() {
+    return new Promise(function(resolve, rej) {
+        con.query("SELECT klantID,naam,voornaam,geboortedatum,geslacht,straat,huisnummer,bus,postcode,gemeente,land,telefoonnummer,email,admin FROM tblklant ORDER BY klantID", (err,res) => {
+            if(err) return rej(err);
+            resolve(res);
+        });
+    });
+}
+export function getUser(id) {
+    return new Promise(function(resolve, rej) {
+        con.query("SELECT klantID,naam,voornaam,geboortedatum,geslacht,straat,huisnummer,bus,postcode,gemeente,land,telefoonnummer,email,admin FROM tblklant WHERE klantID = ?", [id], (err,res) => {
+            if(err) return rej(err);
+            resolve(res);
+        });
+    });
+}
+export function updateKlant(data, id) {
+    return new Promise(function (resolve, rej) {
+        con.query("UPDATE tblklant SET naam=?, voornaam=?, geboortedatum=?, geslacht=?, straat=?,huisnummer=?,bus=?,postcode=?,gemeente=?,land=?,telefoonnummer=?,email=?,admin=? WHERE klantID = ?",  [data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11],data[12],id], (err,res) => {
+            console.log(data,id);
+            if(err) return rej(err);
+            resolve(res);
+        });
+    });
+}
 con.connect(function(err){
-    if(err) throw err;
+    if(err) { console.log("Cannot connect to the database");throw err;}
     console.log("Database connected");
 });

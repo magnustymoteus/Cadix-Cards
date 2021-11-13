@@ -1,6 +1,6 @@
-import {insertKlant, selectKlant, checkKlant} from "./service.js";
+import {insertKlant, selectKlant, checkKlant, updateStats, getUsers, getUser, updateKlant} from "./service.js";
 import express from "express";
-import expressValidator from 'express-validator'; //voor toekomstige back-end form validation
+import expressValidator from 'express-validator'; //voor betere back-end form validation in de toekomst
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import open from 'open';
@@ -21,15 +21,26 @@ app.use(express.static('view'));
 open("http://localhost:3000/home");
 app.get("/home", async(req, res)=> {
     if(req.session.loggedIn) {
-        res.render("home", {root: './view', logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`});
+       updateStats(req.session.klantID).then(function(result) {
+            if(result[0]) {
+                req.session.naam = result[0].naam;
+                req.session.voornaam = result[0].voornaam;
+                req.session.isAdmin = result[0].admin;
+                res.render("home", {logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`, isAdmin: req.session.isAdmin});
+            }
+            else {
+                req.session.destroy();
+                res.redirect('/home');
+            }
+        }).catch((err) => setImmediate(() => { throw err; }));
     }
     else {
-        res.render("home", {root: './view', logged: false});
+        res.render("home", {logged: false});
     }
 });
 app.get("/register", async(req, res)=> {
     if(req.session.loggedIn) res.status(403).send("U bent al ingelogd");
-    else res.render("register", {root: './view', msg: ''});
+    else res.render("register", {msg: ''});
 });
 app.post("/register/auth", async(req, res)=> {
     let regData = new Array();
@@ -55,7 +66,7 @@ app.post("/register/auth", async(req, res)=> {
 
 app.get("/login", async(req, res)=> {
     if(req.session.loggedIn) res.status(403).send("U bent al ingelogd");
-    else res.render("login", {root:"./view", failed: false});
+    else res.render("login", {failed: false});
 });
 app.post("/login/auth", async(req, res)=> {
     let email = req.body.email;
@@ -65,19 +76,71 @@ app.post("/login/auth", async(req, res)=> {
         selectKlant(email,wachtwoord).then(function(result) {
             if(result) {
                 req.session.loggedIn = 1;
-                req.session.naam = result[0].naam;
-                req.session.voornaam = result[0].voornaam;
+                req.session.klantID = result[0].klantID;
                 req.session.cookie.expires = (remember)? 7 * 24 * 3600 * 1000: 720000;
                 res.redirect("/home");
             }
             else {
-                res.render("login", {root:"./view", failed: true});
+                res.render("login", {failed: true});
             }
         }).catch((err) => setImmediate(() => { throw err; }));
     }
     else {
         res.status(400).send("De ingevulde gegevens kloppen niet");
     }
+});
+app.get('/admin', async(req,res) => {
+    if(req.session.isAdmin) {
+        updateStats(req.session.klantID).then(function(result) {
+            if(result[0]) {
+                let adminTypeArg = (result[0].admin==1)?"Moderator":(result[0].admin==2)?"Administrator":"Super Administrator";
+                if (result[0].admin) {
+                    getUsers().then((result) => {
+                        res.render("admin", {logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`, adminType: adminTypeArg, users: result});
+                    });
+                }
+                else {
+                    req.session.isAdmin=0;
+                    res.redirect('/home');
+                }
+            }
+            else {
+                req.session.destroy();
+                res.redirect('/home');
+            }
+            }).catch((err) => setImmediate(() => { throw err; }));
+    }
+    else res.status(403).send("forbidden");
+});
+app.get("/admin/user", async(req, res) => {
+    if(req.session.isAdmin && req.query.id) {
+        updateStats(req.session.klantID).then(function(result) {
+            if(result[0].admin) {
+                getUser(req.query.id).then((user) => {
+                    res.render('user', {logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`, userInfo: user[0]}) 
+                });
+
+            }
+            else {
+                req.session.isAdmin=0;
+                res.redirect('/home');
+            }
+        }).catch((err) => setImmediate(() => { throw err; }));
+    }
+   else res.status(404).send("not found");
+});
+app.post('/admin/user', async(req, res) => {
+    let data = new Array();
+    let empty = 0;
+    for(let i=0;i<Object.keys(req.body).length;i++) {
+        data.push(Object.values(req.body)[i]);
+        if(!data[i].length) empty = 1;
+    }
+    if(!empty) {
+            updateKlant(data, req.query.id);
+            res.redirect("/admin");
+    }
+    else res.status(404).send("Error");
 });
 app.get("/logout", async(req, res) => {
     req.session.destroy();
@@ -86,5 +149,4 @@ app.get("/logout", async(req, res) => {
 app.get("*", async(req, res)=> {
     res.redirect("/home");
 });
-
 app.listen(3000, () => console.log("Running on port 3000"));

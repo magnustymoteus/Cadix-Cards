@@ -13,3 +13,7 @@ nav {
 hr {
     border: 1.5px solid white;
 }
+tbody tr:hover {
+    background-color: #df3b30;
+    cursor: pointer;
+}
