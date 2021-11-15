@@ -6,7 +6,7 @@ A functional website for greeting cards. The website uses Animate.css, Bootstrap
 - NodeJS
 - Already existing MySQL database ```dbcadixcards```, database information coming out soon
  
-# After extracation
+# After extraction
 ```
 cd **your directory**/cadixcards
 node server.js
