@@ -1,23 +1,25 @@
-import {insertKlant, selectKlant, checkKlant, updateStats, getUsers, getUser, updateKlant} from "./service.js";
+import {insertKlant, deleteKlant, selectKlant, checkKlant, updateStats, getUsers, getUser, updateKlant} from "./service.js";
 import express from "express";
-import expressValidator from 'express-validator'; //voor betere back-end form validation in de toekomst
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import open from 'open';
+import favicon from 'serve-favicon';
+import path from 'path';
 const app = express();
 app.use(session({
-    secret: "secret-cookie-key",
+    secret: "superdupercookiesecret123",
     resave: true,
     saveUninitialized: true,
     cookie: {
-        expires: 3600000
+        expires: 3.6e5
     }
 }));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
-app.set('views', './view');
-app.use(express.static('view'));
+app.set('views','./view');
+app.use(express.static('./view'));
+app.use(favicon(path.resolve() + '/view/favicon.ico'));
 open("http://localhost:3000/home");
 app.get("/home", async(req, res)=> {
     if(req.session.loggedIn) {
@@ -26,7 +28,7 @@ app.get("/home", async(req, res)=> {
                 req.session.naam = result[0].naam;
                 req.session.voornaam = result[0].voornaam;
                 req.session.isAdmin = result[0].admin;
-                res.render("home", {logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`, isAdmin: req.session.isAdmin});
+                res.render("home.ejs", {logged: true, name_string: `${req.session.naam} ${req.session.voornaam}`, isAdmin: req.session.isAdmin});
             }
             else {
                 req.session.destroy();
@@ -77,7 +79,7 @@ app.post("/login/auth", async(req, res)=> {
             if(result) {
                 req.session.loggedIn = 1;
                 req.session.klantID = result[0].klantID;
-                req.session.cookie.expires = (remember)? 7 * 24 * 3600 * 1000: 720000;
+                req.session.cookie.expires = (remember)? 6.048e8: 7.2e5;
                 res.redirect("/home");
             }
             else {
@@ -130,9 +132,10 @@ app.get("/admin/user", async(req, res) => {
    else res.status(404).send("not found");
 });
 app.post('/admin/user', async(req, res) => {
+    if(req.body.submit == "edit") {
     let data = new Array();
     let empty = 0;
-    for(let i=0;i<Object.keys(req.body).length;i++) {
+    for(let i=0;i<Object.keys(req.body).length-1;i++) {
         data.push(Object.values(req.body)[i]);
         if(!data[i].length) empty = 1;
     }
@@ -141,6 +144,11 @@ app.post('/admin/user', async(req, res) => {
             res.redirect("/admin");
     }
     else res.status(404).send("Error");
+    }
+    else if (req.body.submit == "delete") {
+        deleteKlant(req.query.id);
+        res.redirect("/admin");
+    }
 });
 app.get("/logout", async(req, res) => {
     req.session.destroy();
@@ -149,6 +157,4 @@ app.get("/logout", async(req, res) => {
 app.get("*", async(req, res)=> {
     res.redirect("/home");
 });
-
 app.listen(3000, () => console.log("Running on port 3000"));
-

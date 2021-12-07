@@ -38,6 +38,11 @@ export function insertKlant(data) {
     });
   });
 }
+export function deleteKlant(id) {
+    con.query("DELETE FROM tblklant WHERE klantID = ?", [id], (err) => {
+        if(err) throw err;
+    });
+}
 export function checkKlant(e,t) {
     return new Promise(function(resolve, rej) {
         con.query("SELECT klantID FROM tblklant WHERE email = ? OR telefoonnummer= ?", [e,t], (err,res) => {

@@ -17,3 +17,6 @@ tbody tr:hover {
     background-color: #df3b30;
     cursor: pointer;
 }
+.active {
+    background-color: grey;
+}

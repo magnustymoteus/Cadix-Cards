@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CC <%= (`${userInfo.naam} ${userInfo.voornaam}`)%></title>
-    <link rel="icon" href="favicon.ico?v=1.1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
-<body style="background-color:#F44336;color:#fff;">
-    <header>
+<body>
+  <header>
         <nav class="navbar navbar-default container">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -40,6 +39,7 @@
             </div>
           </div>
         </nav>
+        </header>
         <div class="container animate__animated animate__fadeInDown">
             <h2 style="margin-bottom: 5%" class="text-center">Bewerk <%= (`${userInfo.naam} ${userInfo.voornaam}`)%></h2>
             <form class="form-horizontal" method="post" action="/admin/user?id=<%=userInfo.klantID%>">
@@ -124,13 +124,12 @@
               </div>
               <div class="form-group">        
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-default">Bewerken</button>
+                  <button type="submit" class="btn btn-default" name="submit" value="edit">Account Bewerken</button>
+                  <button type="submit" class="btn btn-warning" name="submit" value="delete">Account Verwijderen</button>
                 </div>
               </div>
             </form>
           </div>
-        
-      </header>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
