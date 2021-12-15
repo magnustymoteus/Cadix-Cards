@@ -4,7 +4,6 @@ A functional website for greeting cards. The website uses Animate.css, Bootstrap
 
 # Requirements
 - NodeJS
-- MySQL database instance ```dbcadixcards```, database information coming out in its time
 - Webserver (Apache, MAMP, XAMPP, ..)
 # After extraction
 ```
